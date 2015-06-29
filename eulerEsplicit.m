@@ -16,19 +16,19 @@ function odecellarray = eulerEsplicit (N, x, boundaryCondition, Mh, Kh, fh, dt, 
 	% uh0 = uhk(:,0) calculation
 	for i=1:N-1
 		uh0(i) = u0(x(i));
-    end
+  end
 
-    % Neumann Boundary Condition
-    if ( strcmp (boundaryCondition, 'DN') == 1)
+  % Neumann Boundary Condition
+  if ( strcmp (boundaryCondition, 'DN') == 1)
 		uh0 = [ uh0; u0(x(N)) ];
 		uhk = zeros(N,Nk); 
-    end
+  end
     
 	% uh0 = uhk(:,0) ----> uhk(:,1)
 	% A is always a constant in our case, but in theory
 	% can depend upon the time
 	A = (1/dt) * Mh;
-	b = fh + ( (1/dt) * Mh - Kh ) * uh0;
+	b = fh + ( ( (1/dt) * Mh ) - Kh ) * uh0;
 	uhk(:,1) = A\b;
     
     
@@ -37,9 +37,10 @@ function odecellarray = eulerEsplicit (N, x, boundaryCondition, Mh, Kh, fh, dt, 
 	% but it can in theory depend upon the time
 	for k=1:Nk
 		A = (1/dt)*Mh; % Diagonal Matrix With Trapezoid Method
-		b = fh + ((1/dt)*Mh - Kh)*uhk(:,k);
+		b = fh + ( ( (1/dt) * Mh ) - Kh ) * uhk(:,k);
 		uhk(:,k+1) = A\b;
 	end
+  
 	
 	ODEmethod = 'Esplicit Euler';
 	

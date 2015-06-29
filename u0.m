@@ -2,7 +2,7 @@ function [ y ] = u0( x )
 
 % Initial data
 
-	y = -x;
+	y = 0;
 
 end
 
